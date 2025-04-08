@@ -1,0 +1,1 @@
+-// hands on project - no code completions & use of AI assistanse to write the code
