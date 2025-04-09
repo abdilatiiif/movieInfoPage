@@ -18,7 +18,7 @@ export default function NavBar() {
     <nav className="flex justify-between items-center">
       <div className="transition-all cursor-pointer hover:scale-110 flex justify-center items-center gap-4">
         <Film className="w-8 h-8 text-[#832FEAFF]" />
-        <div className="text-3xl ">MovieInfoPage</div>
+        <div className="text-2xl ">MovieInfoPage</div>
       </div>
       <div className="flex gap-4">
         <div className=" flex relative">

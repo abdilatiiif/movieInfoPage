@@ -1,11 +1,12 @@
 import MoviesList from "./MoviesList";
-import Movies from "./MoviesList";
 
 export default function MainContent() {
   return (
-    <section>
-      <header>Movie Collections</header>
-      <MoviesList></MoviesList>
-    </section>
+    <>
+      <header className="text-4xl mt-10 mb-10">Movie Collections</header>
+      <section className="flex justify-center">
+        <MoviesList />
+      </section>
+    </>
   );
 }
