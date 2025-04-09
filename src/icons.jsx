@@ -11,7 +11,7 @@ import {
   List,
 } from "lucide-react";
 
-export const Icons = {
+export const icons = {
   Logo: Film,
   Search,
   Star,
