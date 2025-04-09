@@ -2,7 +2,8 @@ import MainContent from "./components/MainContent";
 import NavBar from "./components/NavBar";
 import "/Users/abdilatif/Desktop/MovieInfoPage/src/styles/app.css";
 
-/*
+import { useState } from "react";
+
 const tempMovies = [
   {
     title: "Dune: Part Two",
@@ -83,13 +84,14 @@ const tempMovies = [
     cast: ["Paul Giamatti", "Dominic Sessa", "Da'Vine Joy Randolph"],
   },
 ];
-*/
 
 export default function App() {
+  const [movies, setMovies] = useState(tempMovies);
+
   return (
     <div className="app">
       <NavBar />
-      <MainContent />
+      <MainContent movies={movies} />
     </div>
   );
 }
