@@ -60,3 +60,8 @@ The project uses Tailwind CSS for styling. Key style patterns:
 - Consistent spacing using Tailwind's spacing scale
 - Responsive design breakpoints
 - Smooth transitions and hover effects
+
+5. ## API
+
+data:
+https://www.omdbapi.com/

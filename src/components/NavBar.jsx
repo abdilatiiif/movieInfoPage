@@ -13,7 +13,7 @@ import {
   List,
 } from "lucide-react";
 
-export default function NavBar() {
+export default function NavBar({ onSearch, watched }) {
   return (
     <nav className="flex justify-between items-center">
       <div className="transition-all cursor-pointer hover:scale-110 flex justify-center items-center gap-4">
@@ -24,6 +24,7 @@ export default function NavBar() {
         <div className=" flex relative">
           <Search className=" cursor-pointer w-5 h-5 absolute left-2 top-3 " />
           <input
+            onChange={(e) => onSearch(e.target)}
             type="text"
             placeholder=" Search movies..."
             className="cursor-pointer border-none rounded-full p-[8px] pl-8 w-[250px] bg-[#202936] transition-all focus:outline-none focus:ring focus:border-red-200 ring-purple-500 outline-purple-500"
@@ -32,7 +33,7 @@ export default function NavBar() {
         <div className="flex items-center relative bg-[#9C59EE] rounded-full hover:bg-[#842EEEFF] transition-all">
           <List className=" cursor-pointer w-5 h-5 absolute left-2" />
           <button className=" cursor-pointer ml-2 p-[8px] w-[150px] ">
-            Watchlist <span>(4)</span>
+            Watchlist <span>({watched})</span>
           </button>
         </div>
       </div>
