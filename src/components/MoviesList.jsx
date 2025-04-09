@@ -1,12 +1,11 @@
 import Movie from "./movie";
 
-export default function MoviesList() {
+export default function MoviesList({ movies }) {
+  console.log(movies);
   // loop over movies here
   return (
-    <div className="flex justify-center gap-6 ">
-      <Movie />
-      <Movie />
-      <Movie />
+    <div className="flex flex-wrap justify-center gap-6 ">
+      {movies && movies.map((movie) => <Movie movie={movie} />)}
     </div>
   );
 }

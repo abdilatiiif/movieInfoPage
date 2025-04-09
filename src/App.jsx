@@ -1,6 +1,11 @@
+import { Search } from "lucide-react";
 import MainContent from "./components/MainContent";
 import NavBar from "./components/NavBar";
 import "/Users/abdilatif/Desktop/MovieInfoPage/src/styles/app.css";
+
+import { useEffect, useState } from "react";
+
+const API_KEY = "48fbb5a9";
 
 /*
 const tempMovies = [
@@ -86,10 +91,37 @@ const tempMovies = [
 */
 
 export default function App() {
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState("batman");
+  const [watched, setWatched] = [12];
+
+  function handleSearch(e) {
+    setQuery(e.value);
+  }
+
+  // Get movies function
+  useEffect(() => {
+    try {
+      async function getMovies() {
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+        );
+        const data = await res.json();
+        console.log(data.Search);
+        setMovies(data.Search);
+      }
+      getMovies();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [query]);
+
+  //Get that movie
+
   return (
     <div className="app">
-      <NavBar />
-      <MainContent />
+      <NavBar watched={watched} onSearch={handleSearch} />
+      <MainContent movies={movies} />
     </div>
   );
 }
