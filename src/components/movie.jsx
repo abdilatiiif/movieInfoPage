@@ -1,14 +1,12 @@
 import { Star } from "lucide-react";
 
-export default function Movie({ movie }) {
-  console.log(movie);
-  console.log("from movie");
-
+export default function Movie({ movie, getMovieInfo }) {
   // destructor object for matching details
   const { Title: title, Year: year, Poster: poster, Type: type } = movie;
 
   return (
     <div
+      onClick={() => getMovieInfo(movie.imdbID)}
       style={{
         backgroundImage: `url(${poster})`,
         backgroundSize: "cover",
