@@ -94,26 +94,69 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("batman");
   const [watched, setWatched] = [12];
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [imdbID, setImdbID] = useState("");
 
   function handleSearch(e) {
     setQuery(e.value);
   }
 
-  // Get movies function
+  function getMovieInfo(id) {
+    setImdbID(id);
+  }
+
   useEffect(() => {
-    try {
-      async function getMovies() {
+    async function getMovie() {
+      try {
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`
         );
         const data = await res.json();
-        console.log(data.Search);
-        setMovies(data.Search);
+
+        imdbID && console.log(data);
+      } catch (error) {
+        console.log("could`t get the movie", error);
+        throw new Error("no info of the movie");
+      } finally {
+        setError("no info");
       }
-      getMovies();
-    } catch (error) {
-      console.log(error);
     }
+    getMovie();
+  }, [imdbID]);
+
+  // Get movies function
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function getMovies() {
+      try {
+        setIsLoading(true);
+        setMovies([]);
+        if (query.length > 2) {
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          );
+          const data = await res.json();
+
+          if (data.Response === "False") {
+            throw new Error("No movie was found ⛔️");
+          }
+          setMovies(data.Search);
+        }
+      } catch (error) {
+        if (error.name === "Error") {
+          setError("no movie found", error);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getMovies();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   //Get that movie
@@ -121,7 +164,18 @@ export default function App() {
   return (
     <div className="app">
       <NavBar watched={watched} onSearch={handleSearch} />
-      <MainContent movies={movies} />
+
+      {!isLoading ? (
+        <MainContent
+          movies={movies}
+          isLoading={isLoading}
+          getMovieInfo={getMovieInfo}
+        />
+      ) : (
+        <p className="mt-10 text-3xl">Loading movies ⏳</p>
+      )}
+
+      {!movies.length > 0 && error}
     </div>
   );
 }
