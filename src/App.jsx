@@ -102,9 +102,21 @@ export default function App() {
     setQuery(e.value);
   }
 
+  function handleCloseMovie() {
+    console.log("clicked close btn");
+    setImdbID("");
+  }
+
   function getMovieInfo(id) {
     setImdbID(id);
     console.log("open modal");
+
+    // slow scroll top of the page
+    document.body.scrollTop = 0;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   useEffect(() => {
@@ -164,7 +176,7 @@ export default function App() {
 
   return (
     <div className="relative">
-      <MovieModal />
+      {imdbID && <MovieModal handleCloseMovie={handleCloseMovie} />}
       <NavBar watched={watched} onSearch={handleSearch} />
 
       {!isLoading ? (
