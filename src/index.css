@@ -4,7 +4,7 @@
 
 html {
   @apply bg-gradient-to-br from-gray-900;
-  @apply to-gray-800 text-white p-10 mx-auto;
+  @apply to-gray-800 text-white mx-auto;
   font-family: "Ubuntu", sans-serif;
   font-weight: 400;
   font-style: normal;

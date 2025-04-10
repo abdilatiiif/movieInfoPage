@@ -1,9 +1,9 @@
-import { Search } from "lucide-react";
 import MainContent from "./components/MainContent";
 import NavBar from "./components/NavBar";
 import "/Users/abdilatif/Desktop/MovieInfoPage/src/styles/app.css";
 
 import { useEffect, useState } from "react";
+import MovieModal from "./components/MovieModal";
 
 const API_KEY = "48fbb5a9";
 
@@ -104,6 +104,7 @@ export default function App() {
 
   function getMovieInfo(id) {
     setImdbID(id);
+    console.log("open modal");
   }
 
   useEffect(() => {
@@ -162,7 +163,8 @@ export default function App() {
   //Get that movie
 
   return (
-    <div className="app">
+    <div className="relative">
+      <MovieModal />
       <NavBar watched={watched} onSearch={handleSearch} />
 
       {!isLoading ? (
