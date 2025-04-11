@@ -1,9 +1,9 @@
-import { Search } from "lucide-react";
 import MainContent from "./components/MainContent";
 import NavBar from "./components/NavBar";
 import "/Users/abdilatif/Desktop/MovieInfoPage/src/styles/app.css";
 
 import { useEffect, useState } from "react";
+import MovieModal from "./components/MovieModal";
 
 const API_KEY = "48fbb5a9";
 
@@ -97,14 +97,37 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [imdbID, setImdbID] = useState("");
+  const [selected, setSeleced] = useState("");
 
   function handleSearch(e) {
     setQuery(e.value);
   }
 
+  function handleCloseMovie() {
+    console.log("clicked close btn");
+    setImdbID("");
+    setSeleced("");
+  }
+
   function getMovieInfo(id) {
     setImdbID(id);
+    console.log("open modal");
+
+    // slow scroll top of the page
+    document.body.scrollTop = 0;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        handleCloseMovie();
+      }
+    });
+  }, []);
 
   useEffect(() => {
     async function getMovie() {
@@ -114,7 +137,7 @@ export default function App() {
         );
         const data = await res.json();
 
-        imdbID && console.log(data);
+        imdbID && setSeleced(data);
       } catch (error) {
         console.log("could`t get the movie", error);
         throw new Error("no info of the movie");
@@ -162,7 +185,10 @@ export default function App() {
   //Get that movie
 
   return (
-    <div className="app">
+    <div className="relative">
+      {imdbID && (
+        <MovieModal movie={selected} handleCloseMovie={handleCloseMovie} />
+      )}
       <NavBar watched={watched} onSearch={handleSearch} />
 
       {!isLoading ? (

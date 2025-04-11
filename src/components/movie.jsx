@@ -18,7 +18,7 @@ export default function Movie({ movie, getMovieInfo }) {
     >
       <div className="">
         {" "}
-        <h3 className=" text-3xl mb-3 font-bold bg-black p-2">{title}</h3>
+        <h3 className=" text-3xl mb-3 font-bold bg-black p-2 ">{title}</h3>
       </div>
       <div className="flex justify-between items-center">
         <button className=" rounded-lg border-none text-white p-1 bg-purple-600 w-[100px]">

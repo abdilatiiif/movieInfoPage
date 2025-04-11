@@ -1,4 +1,4 @@
-import Movie from "./movie";
+import Movie from "./Movie";
 
 export default function MoviesList({ movies, getMovieInfo }) {
   // loop over movies here

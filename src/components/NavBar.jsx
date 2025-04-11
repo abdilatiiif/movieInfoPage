@@ -15,7 +15,7 @@ import {
 
 export default function NavBar({ onSearch, watched }) {
   return (
-    <nav className="flex justify-between items-center">
+    <nav className="flex justify-between items-center pt-10 pl-10 pr-10">
       <div className="transition-all cursor-pointer hover:scale-110 flex justify-center items-center gap-4">
         <Film className="w-8 h-8 text-[#832FEAFF]" />
         <div className="text-2xl ">MovieInfoPage</div>
