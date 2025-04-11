@@ -97,6 +97,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [imdbID, setImdbID] = useState("");
+  const [selected, setSeleced] = useState("");
 
   function handleSearch(e) {
     setQuery(e.value);
@@ -105,6 +106,7 @@ export default function App() {
   function handleCloseMovie() {
     console.log("clicked close btn");
     setImdbID("");
+    setSeleced("");
   }
 
   function getMovieInfo(id) {
@@ -120,6 +122,14 @@ export default function App() {
   }
 
   useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        handleCloseMovie();
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     async function getMovie() {
       try {
         const res = await fetch(
@@ -127,7 +137,7 @@ export default function App() {
         );
         const data = await res.json();
 
-        imdbID && console.log(data);
+        imdbID && setSeleced(data);
       } catch (error) {
         console.log("could`t get the movie", error);
         throw new Error("no info of the movie");
@@ -176,7 +186,9 @@ export default function App() {
 
   return (
     <div className="relative">
-      {imdbID && <MovieModal handleCloseMovie={handleCloseMovie} />}
+      {imdbID && (
+        <MovieModal movie={selected} handleCloseMovie={handleCloseMovie} />
+      )}
       <NavBar watched={watched} onSearch={handleSearch} />
 
       {!isLoading ? (

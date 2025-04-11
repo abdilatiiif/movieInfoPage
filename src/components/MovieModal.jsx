@@ -9,19 +9,22 @@ import {
   BookmarkPlus,
   BookmarkCheck,
   List,
+  Timer,
 } from "lucide-react";
 
-export default function MovieModal({ handleCloseMovie }) {
+export default function MovieModal({ handleCloseMovie, movie }) {
+  /* .split(",").map((n) => (
+        <li className="bg-[#394050] p-2 rounded-lg">{n}</li>
+    ))
+*/
   return (
     <div className="overlay backdrop-blur-sm border w-full h-full absolute z-30 flex justify-center">
       <div className="overflow-hidden rounded-xl flex flex-col absolute top-[200px] h-2/5 bg-[#202936] w-2/3">
         <div
           style={{
-            backgroundSize: "cover",
-            backgroundImage:
-              "url('https://rtvc-assets-radionica3.s3.amazonaws.com/s3fs-public/styles/articulo_760x422/public/2024-10/filters_quality%2895%29format%28webp%29.jpg?itok=43c0YITf')",
+            backgroundImage: `url(${movie.Poster})`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "top center",
+            backgroundPosition: "center",
             maskImage: "linear-gradient(black, transparent)",
           }}
           className="h-1/2 w-full"
@@ -32,7 +35,7 @@ export default function MovieModal({ handleCloseMovie }) {
         />
 
         <div className="flex justify-between px-10">
-          <span className="text-4xl font-bold">Title of the movie here</span>{" "}
+          <span className="text-4xl font-bold">{movie.Title}</span>{" "}
           <button className="flex justify-center items-center gap-2 p-2 px-4 bg-[#9D58F0] rounded-full transition-all cursor-pointer hover:scale-110">
             {" "}
             <BookmarkPlus className="w-4 h-4" /> <p>Add to watchlist</p>
@@ -50,26 +53,28 @@ export default function MovieModal({ handleCloseMovie }) {
           </span>
         </div>
 
-        <div className="flex ">
-          <div className="flex flex-col border bg-pink-400 flex-1">
+        <div className="flex bg-transparent ">
+          <div className="flex flex-col flex-1 p-10">
             {" "}
-            <p>
-              • some text[ x] Create the Loader component: Display a simple
-              loading indicator. • [x ] Create the ErrorMessage component:
-              Display an error message to the user if something goes wrong.
-              Phase 3: Displaying Search Results
-            </p>
-            <ul>
-              <li>dircetor</li>
-              <li>time</li>
-              <li>year</li>
+            <p className="mb-10">{movie.Plot}</p>
+            <ul className="flex flex-col gap-4">
+              <li className="flex gap-2">
+                {" "}
+                <Ticket /> <p>Dircetor: {movie.Director}</p>
+              </li>
+              <li className="flex gap-2">
+                {" "}
+                <Timer /> <p>Duration: {movie.Runtime}</p>
+              </li>
+              <li className="flex gap-2">
+                {" "}
+                <Calendar /> <p>Release Year: {movie.Year}</p>
+              </li>
             </ul>
           </div>
-          <div className=" flex-1 flex flex-col border bg-red-300 ">
-            <h3>Cast</h3>
-            <ul>
-              <li>loop over cast</li>
-            </ul>
+          <div className=" flex-1 flex flex-col p-10 ">
+            <h3 className="text-2xl font-bold mb-4">Cast</h3>
+            <ul className="flex flex-col gap-2">{movie.Actors}</ul>
           </div>
         </div>
       </div>
