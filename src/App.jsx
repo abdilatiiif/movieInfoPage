@@ -105,6 +105,14 @@ export default function App() {
     setQuery(e.value);
   }
 
+  function handleDeleteMovie(id) {
+    console.log("clicked", id);
+    setWatched((prevWatched) =>
+      prevWatched.filter((movie) => movie.imdbID !== id)
+    );
+    console.log(watched);
+  }
+
   function handleClose() {
     setImdbID("");
     setSeleced("");
@@ -129,6 +137,7 @@ export default function App() {
       }
     }
     getMovie();
+    openWatchList();
 
     console.log(watched);
   }
@@ -227,7 +236,11 @@ export default function App() {
         />
       )}
       {watched.length > 0 && showModal && (
-        <Modal handleClose={handleClose} watched={watched} />
+        <Modal
+          handleDeleteMovie={handleDeleteMovie}
+          handleClose={handleClose}
+          watched={watched}
+        />
       )}
       <NavBar
         watched={watched}

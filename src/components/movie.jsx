@@ -14,7 +14,7 @@ export default function Movie({ movie, getMovieInfo }) {
         backgroundPosition: "center",
         cursor: "pointer",
       }}
-      className=" flex flex-col justify-end mt-5 p-5 border w-[400px] h-[400px] rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300"
+      className=" flex flex-col justify-end mt-5 p-5 w-[400px] h-[400px] rounded-xl overflow-hidden transform hover:scale-105 transition-transform duration-300"
     >
       <div className="">
         {" "}
