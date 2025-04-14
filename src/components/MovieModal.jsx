@@ -12,11 +12,11 @@ import {
   Timer,
 } from "lucide-react";
 
-export default function MovieModal({ handleCloseMovie, movie }) {
-  /* .split(",").map((n) => (
-        <li className="bg-[#394050] p-2 rounded-lg">{n}</li>
-    ))
-*/
+import { useState } from "react";
+
+export default function MovieModal({ handleClose, movie, handleAddWatch }) {
+  const [green, setGreen] = useState(false);
+
   return (
     <div className="overlay backdrop-blur-sm border w-full h-full absolute z-30 flex justify-center">
       <div className="overflow-hidden rounded-xl flex flex-col absolute top-[200px] h-2/5 bg-[#202936] w-2/3">
@@ -31,14 +31,27 @@ export default function MovieModal({ handleCloseMovie, movie }) {
         ></div>
         <X
           className="absolute right-5 top-5 cursor-pointer"
-          onClick={() => handleCloseMovie()}
+          onClick={() => handleClose()}
         />
 
         <div className="flex justify-between px-10">
           <span className="text-4xl font-bold">{movie.Title}</span>{" "}
-          <button className="flex justify-center items-center gap-2 p-2 px-4 bg-[#9D58F0] rounded-full transition-all cursor-pointer hover:scale-110">
+          <button
+            onClick={() => {
+              handleAddWatch(movie.imdbID);
+              setGreen(true);
+            }}
+            className={`${
+              green ? "bg-green-400" : "bg-[#9D58F0]"
+            } flex justify-center items-center gap-2 p-2 px-4 rounded-full transition-all cursor-pointer hover:scale-110`}
+          >
             {" "}
-            <BookmarkPlus className="w-4 h-4" /> <p>Add to watchlist</p>
+            {green ? (
+              <BookmarkPlus className="w-4 h-4" />
+            ) : (
+              <BookmarkCheck className="w-4 h-4" />
+            )}
+            <p>{!green ? "Add to watchlist" : "remove from Watchlist"}</p>
           </button>
         </div>
         <div className=" mt-5 flex items-center pl-10 gap-4">

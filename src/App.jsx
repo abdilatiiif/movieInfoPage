@@ -4,6 +4,7 @@ import "/Users/abdilatif/Desktop/MovieInfoPage/src/styles/app.css";
 
 import { useEffect, useState } from "react";
 import MovieModal from "./components/MovieModal";
+import Modal from "./components/Modal";
 
 const API_KEY = "48fbb5a9";
 
@@ -93,20 +94,52 @@ const tempMovies = [
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("batman");
-  const [watched, setWatched] = [12];
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [imdbID, setImdbID] = useState("");
   const [selected, setSeleced] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   function handleSearch(e) {
     setQuery(e.value);
   }
 
-  function handleCloseMovie() {
-    console.log("clicked close btn");
+  function handleClose() {
     setImdbID("");
     setSeleced("");
+    setShowModal(false);
+  }
+
+  function handleAddWatch(id) {
+    async function getMovie() {
+      try {
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`
+        );
+        const data = await res.json();
+
+        console.log(data);
+        setWatched((w) => [...w, data]);
+      } catch (error) {
+        console.log("could`t get the movie", error);
+        throw new Error("no info of the movie");
+      } finally {
+        setError("no info");
+      }
+    }
+    getMovie();
+
+    console.log(watched);
+  }
+
+  function openWatchList() {
+    if (!watched.length > 0) {
+      console.log("empty watchlist");
+    } else {
+      console.log("open watchlist modal");
+      setShowModal(true);
+    }
   }
 
   function getMovieInfo(id) {
@@ -124,7 +157,7 @@ export default function App() {
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
-        handleCloseMovie();
+        handleClose();
       }
     });
   }, []);
@@ -187,9 +220,20 @@ export default function App() {
   return (
     <div className="relative">
       {imdbID && (
-        <MovieModal movie={selected} handleCloseMovie={handleCloseMovie} />
+        <MovieModal
+          movie={selected}
+          handleAddWatch={handleAddWatch}
+          handleClose={handleClose}
+        />
       )}
-      <NavBar watched={watched} onSearch={handleSearch} />
+      {watched.length > 0 && showModal && (
+        <Modal handleClose={handleClose} watched={watched} />
+      )}
+      <NavBar
+        watched={watched}
+        onSearch={handleSearch}
+        openWatchList={openWatchList}
+      />
 
       {!isLoading ? (
         <MainContent
