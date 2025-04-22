@@ -13,16 +13,16 @@ import {
   List,
 } from "lucide-react";
 
-export default function NavBar({ onSearch, watched, openWatchList }) {
+export default function NavBar({ onSearch, watched = [0], openWatchList }) {
   return (
-    <nav className="flex justify-between items-center pt-10 pl-10 pr-10">
-      <div className="transition-all cursor-pointer hover:scale-110 flex justify-center items-center gap-4">
+    <nav className="flex items-center justify-between pt-10 pl-10 pr-10">
+      <div className="flex items-center justify-center gap-4 transition-all cursor-pointer hover:scale-110">
         <Film className="w-8 h-8 text-[#832FEAFF]" />
         <div className="text-2xl ">MovieInfoPage</div>
       </div>
       <div className="flex gap-4">
-        <div className=" flex relative">
-          <Search className=" cursor-pointer w-5 h-5 absolute left-2 top-3 " />
+        <div className="relative flex ">
+          <Search className="absolute w-5 h-5 cursor-pointer left-2 top-3" />
           <input
             onChange={(e) => onSearch(e.target)}
             type="text"
@@ -31,12 +31,12 @@ export default function NavBar({ onSearch, watched, openWatchList }) {
           />
         </div>
         <div className="flex items-center relative bg-[#9C59EE] rounded-full hover:bg-[#842EEEFF] transition-all">
-          <List className=" cursor-pointer w-5 h-5 absolute left-2" />
+          <List className="absolute w-5 h-5 cursor-pointer left-2" />
           <button
             onClick={() => openWatchList()}
             className=" cursor-pointer ml-2 p-[8px] w-[150px] "
           >
-            Watchlist <span>({watched.length})</span>
+            Watchlist <span>({watched && watched.length})</span>
           </button>
         </div>
       </div>
