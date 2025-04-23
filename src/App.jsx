@@ -25,10 +25,6 @@ export default function App() {
     return JSON.parse(storedWatchList);
   });
 
-  function handleSearch(e) {
-    setQuery(e.value);
-  }
-
   function handleDeleteMovie(id) {
     console.log("clicked", id);
     setWatched((prevWatched) =>
@@ -174,7 +170,7 @@ export default function App() {
       )}
       <NavBar
         watched={watched}
-        onSearch={handleSearch}
+        setQuery={setQuery}
         openWatchList={openWatchList}
       />
       {!isLoading ? (
